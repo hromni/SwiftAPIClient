@@ -62,6 +62,15 @@ extension Endpoint {
             request.setValue(value, forHTTPHeaderField: header)
         }
 
+        switch httpBody {
+        case .formData:
+            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        case .json:
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        case .none:
+            break
+        }
+
         request.httpMethod = httpMethod.rawValue
         request.httpBody = try httpBody?.getData()
 

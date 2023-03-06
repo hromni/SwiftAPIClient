@@ -33,11 +33,14 @@ import Foundation
 
 public enum RequestBody {
     case json(Encodable)
+    case formData([String: CustomStringConvertible?])
 
     func getData() throws -> Data? {
         switch self {
         case .json(let obj):
             return try makeJson(obj)
+        case .formData(let formData):
+            return makeFormData(formData)
         }
     }
 
@@ -50,5 +53,11 @@ public enum RequestBody {
             // this should never be called but is here as fallback
             throw SwiftApiClientError.unexpectedError(error)
         }
+    }
+
+    private func makeFormData(_ formData: [String: CustomStringConvertible?]) -> Data? {
+        var components = URLComponents()
+        components.queryItems = formData.map{ .init(name: $0.key, value: $0.value?.description) }
+        return components.query?.data(using: .utf8)
     }
 }
