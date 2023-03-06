@@ -32,5 +32,5 @@
 import Foundation
 
 public protocol Response {
-    static func parse<T: Response>(data: Data?) throws -> T
+    static func parse(data: Data?) throws -> Self
 }
