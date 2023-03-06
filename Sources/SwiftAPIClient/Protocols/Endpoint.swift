@@ -65,7 +65,7 @@ extension Endpoint {
         switch httpBody {
         case .formData:
             request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        case .json:
+        case .jsonEncodable, .jsonDictionary:
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         case .none:
             break

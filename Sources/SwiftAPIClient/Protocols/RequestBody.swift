@@ -32,15 +32,25 @@
 import Foundation
 
 public enum RequestBody {
-    case json(Encodable)
+    case jsonEncodable(Encodable)
+    case jsonDictionary([String: CustomStringConvertible?])
     case formData([String: CustomStringConvertible?])
 
     func getData() throws -> Data? {
         switch self {
-        case .json(let obj):
+        case .jsonEncodable(let obj):
             return try makeJson(obj)
         case .formData(let formData):
             return makeFormData(formData)
+        case .jsonDictionary(let dictionary):
+            let dict = transformToDictionary(dictionary)
+            return try makeJson(dict)
+        }
+    }
+
+    private func transformToDictionary(_ rawData: [String: CustomStringConvertible?]) -> [String: String?] {
+        return rawData.reduce(into: [String: String?]()) { temp, current in
+            temp[current.key] = current.value?.description
         }
     }
 
