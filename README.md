@@ -1,7 +1,20 @@
 # SwiftAPIClient
 This is a light weight API Client written in Swift. It works with both `async await` and `Combine` publishers depending on your needs
+  
+| Table of contents |
+| --- |
+| [Define your endpoints using enum](#enum-endpoints) |
+| [Define endpoint using struct](#struct-endpoint) |
+| [Decode JSON responses](#decode-json) |
+| [Send request using Combine](#send-combine) |
+| [Send request using async](#send-async) |
+| [Response validation](#response-validation) |
+| [Contribution](#contribution) |
 
-## Endpoint example using enum
+
+<a name="enum-endpoints"/>
+
+## Define your endpoints using enum
 
 ```swift
 import Foundation
@@ -41,6 +54,8 @@ enum Endpoints: Endpoint {
 }
 ```
 
+<a name="struct-endpoint"/>
+
 ## Endpoint example using `struct`
 
 ```swift
@@ -51,8 +66,9 @@ struct GetDataEndpoint: Endpoint {
 }
 ```
 
+<a name="decode-json"/>
 
-## Define JSON responses
+## Decode JSON responses
 
 If you're expecting a JSON response you can use `JsonResponse` protocol which is a wrapper of `Decodable` with some extra build-in functionality. You can also create your own response type by conforming to `Response` protocol.
 
@@ -64,6 +80,8 @@ struct ExampleDataResponse: JsonResponse {
     let name: String
 }
  ```
+
+<a name="send-combine"/>
 
 ## Send request using Combine
 
@@ -80,6 +98,8 @@ struct ApiClient {
 
 ```
 
+<a name="send-async"/>
+
 ## Send request using async
 
 As mentioned the endpoint automatically handles both `Combine` and `async`, so you can use either approach.
@@ -95,6 +115,8 @@ struct ApiClient {
 }
 
 ```
+
+<a name="response-validation"/>
 
 ## Validating responses
 
@@ -118,3 +140,10 @@ public protocol ResponseValidator {
 }
 ```
 and then pass it as a validator to your endpoints to replace the default response validation
+
+<a name="contribution"/>
+
+## Contribution
+
+Contributors are welcome.
+Simply open an issue or a pull request if there is any issues or suggestions.
