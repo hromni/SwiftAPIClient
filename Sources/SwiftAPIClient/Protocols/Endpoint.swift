@@ -32,19 +32,29 @@
 import Foundation
 import Combine
 
+// MARK: Public definitions
 public protocol Endpoint {
+    /// Request body. Default is *nil*
     var httpBody: RequestBody? { get }
+    /// Request method: GET, POST, PUT, DELETE. Default is GET
     var httpMethod: HTTPMethod { get }
+    /// Request headeers. Default is EMPTY
     var heаders: [String: String] { get }
+    /// Base URL string
     var baseUrlString: String { get }
-    /// URL path. *Important* should always start with formward slash
+    /// URL path. *Important* should always start with forward slash. Leave it empty if not relevant
     var path: String { get }
+    /// URL query parameters. Default is *nil*
     var query: [String: CustomStringConvertible?]? { get }
+    /// Response validator. Default is *BasicResponseValidator*
     var responseValidation: ResponseValidator { get }
+    /// Request timeout. Default is 30 seconds
     var timeoutInterval: TimeInterval { get }
+    /// Request cache policy. Default is *.reloadIgnoringLocalAndRemoteCacheData*
     var cachePolicy: URLRequest.CachePolicy { get }
 }
 
+// MARK: Private methods
 extension Endpoint {
     func buildURLRequest() throws -> URLRequest {
         guard var urlComponents = URLComponents(string: baseUrlString) else {
@@ -78,6 +88,7 @@ extension Endpoint {
     }
 }
 
+// MARK: Set up defaults & sending requests
 public extension Endpoint {
     var httpMethod: HTTPMethod { .get }
     var httpBody: RequestBody? { nil }
@@ -87,6 +98,8 @@ public extension Endpoint {
     var cachePolicy: URLRequest.CachePolicy { .reloadIgnoringLocalAndRemoteCacheData }
     var responseValidation: ResponseValidator { BasicResponseValidator() }
 
+    /// Send request using Combine and try to map the response to an object
+    /// - Returns: AnyPublisher<T, SwiftApiClientError> where T is an object conforming to *Response*
     func send<T: Response>() -> AnyPublisher<T, SwiftApiClientError> {
         do {
             let request = try buildURLRequest()
@@ -101,6 +114,8 @@ public extension Endpoint {
         }
     }
 
+    /// Send VOID request using Combine without mapping the response to an object
+    /// - Returns: AnyPublisher<Void, SwiftApiClientError>
     func send() -> AnyPublisher<Void, SwiftApiClientError> {
         do {
             let request = try buildURLRequest()
@@ -118,6 +133,8 @@ public extension Endpoint {
 
 @available(macOS 12, *)
 public extension Endpoint {
+    /// Send request using *async*
+    /// - Returns: Generic type conforming to *Response* protocol
     func send<T: Response>() async throws -> T {
         let request = try buildURLRequest()
         let serverResponse = try await URLSession.shared.data(for: request)
@@ -126,6 +143,7 @@ public extension Endpoint {
     }
 }
 
+// MARK: Private definitions
 private extension URLSession.DataTaskPublisher {
     func tryMapResponse<T: Response>(_ decodable: T.Type, responseValidator: ResponseValidator) -> Publishers.TryMap<Self, T> {
         self.tryMap {
