@@ -1,8 +1,10 @@
-# SwiftAPIClient
-This is a light weight API Client written in Swift. It works with both `async await` and `Combine` publishers depending on your needs
-  
+## SwiftAPIClient
+
+Light weight and simplistic API Client written in Swift using protocol oriented programming. You can send requests using `async await` or `Combine` publishers without having to change anything.  **SwiftAPIClient** can help you implement your server API calls with just a couple lines of code.
+
 | Table of contents |
 | --- |
+| [Install with SPM](#spm) |
 | [Define your endpoints using enum](#enum-endpoints) |
 | [Define endpoint using struct](#struct-endpoint) |
 | [Decode JSON responses](#decode-json) |
@@ -11,10 +13,23 @@ This is a light weight API Client written in Swift. It works with both `async aw
 | [Response validation](#response-validation) |
 | [Contribution](#contribution) |
 
+<a name="spm"/>
+
+### Swift Package Manager
+
+The [Swift Package Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
+
+Once you have your Swift package set up, adding SwiftAPIClient as a dependency is as easy as adding it to the dependencies value of your Package.swift.
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/hromni/SwiftAPIClient.git", .upToNextMajor(from: "0.1"))
+]
+```
 
 <a name="enum-endpoints"/>
 
-## Define your endpoints using enum
+### Define your endpoints using enum
 
 ```swift
 import Foundation
@@ -56,7 +71,7 @@ enum Endpoints: Endpoint {
 
 <a name="struct-endpoint"/>
 
-## Endpoint example using `struct`
+### Endpoint example using `struct`
 
 ```swift
 struct GetDataEndpoint: Endpoint {
@@ -68,7 +83,7 @@ struct GetDataEndpoint: Endpoint {
 
 <a name="decode-json"/>
 
-## Decode JSON responses
+### Decode JSON responses
 
 If you're expecting a JSON response you can use `JsonResponse` protocol which is a wrapper of `Decodable` with some extra build-in functionality. You can also create your own response type by conforming to `Response` protocol.
 
@@ -83,7 +98,7 @@ struct ExampleDataResponse: JsonResponse {
 
 <a name="send-combine"/>
 
-## Send request using Combine
+### Send request using Combine
 
 Create client wrapper with `Combine` using the endpoints
 
@@ -100,7 +115,7 @@ struct ApiClient {
 
 <a name="send-async"/>
 
-## Send request using async
+### Send request using async
 
 As mentioned the endpoint automatically handles both `Combine` and `async`, so you can use either approach.
 For example if you want to use `async` you can do so with the example below using the same `Endponts` definition above
@@ -118,7 +133,7 @@ struct ApiClient {
 
 <a name="response-validation"/>
 
-## Validating responses
+### Validating responses
 
 The default validator code is below.
 
@@ -143,7 +158,7 @@ and then pass it as a validator to your endpoints to replace the default respons
 
 <a name="contribution"/>
 
-## Contribution
+### Contribution
 
 Contributors are welcome.
 Simply open an issue or a pull request if there is any issues or suggestions.
