@@ -1,5 +1,7 @@
 ## SwiftAPIClient
 
+![Group 3032 (3)](https://user-images.githubusercontent.com/11628358/223416855-71d0c02f-ee39-48f5-a5d4-4442e2a5089e.png)
+
 Light weight and simplistic API Client written in Swift using protocol oriented programming. You can send requests using `async await` or `Combine` publishers without having to change anything.  **SwiftAPIClient** can help you implement your server API calls with just a couple lines of code.
 
 | Table of contents |
