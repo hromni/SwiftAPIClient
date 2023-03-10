@@ -5,7 +5,7 @@
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fhromni%2FSwiftAPIClient%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/hromni/SwiftAPIClient)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fhromni%2FSwiftAPIClient%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/hromni/SwiftAPIClient)
 
-Light weight and simplistic API Client written in Swift using protocol oriented programming. You can send requests using `async await` or `Combine` publishers without having to change anything.  **SwiftAPIClient** can help you implement your server API calls with just a couple lines of code.
+Light weight and simplistic API Client written in Swift using protocol oriented programming. You can send requests using `async await` or `Combine` publishers without having to change anything.  **SwiftAPIClient** can help you implement your HTTP and server API calls with just a couple lines of code.
 
 | Table of contents |
 | --- |
