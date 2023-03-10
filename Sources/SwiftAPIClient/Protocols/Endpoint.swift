@@ -141,6 +141,13 @@ public extension Endpoint {
         try responseValidation.validate(serverResponse)
         return try T.parse(data: serverResponse.0)
     }
+
+    /// Send request using *async* and only validate the response without decoding it to an object
+    func send() async throws {
+        let request = try buildURLRequest()
+        let serverResponse = try await URLSession.shared.data(for: request)
+        try responseValidation.validate(serverResponse)
+    }
 }
 
 // MARK: Private definitions
