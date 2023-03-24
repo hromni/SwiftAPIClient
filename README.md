@@ -123,14 +123,14 @@ struct ApiClient {
 ### Send request using async
 
 As mentioned the endpoint automatically handles both `Combine` and `async`, so you can use either approach.
-For example if you want to use `async` you can do so with the example below using the same `Endponts` definition above
+For example if you want to use `async` all you need to do is replace `send()` with `asyncSend()` using the same `Endponts` definition above
 
 ```swift
 
 struct ApiClient {
     static func getData() async throws -> ExampleDataResponse {
-        try await Endpoints.getData.send() 
-        // try await GetDataEndpoint().send()
+        try await Endpoints.getData.asyncSend() 
+        // try await GetDataEndpoint().asyncSend()
     }
 }
 
@@ -166,4 +166,3 @@ and then pass it as a validator to your endpoints to replace the default respons
 ### Contribution
 
 Contributors are welcome.
-Simply open an issue or a pull request if there is any issues or suggestions.

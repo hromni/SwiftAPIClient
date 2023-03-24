@@ -133,6 +133,7 @@ public extension Endpoint {
 
 @available(macOS 12, *)
 public extension Endpoint {
+    @available(*, deprecated, renamed: "asyncSend()", message: "This will be removed in later versions")
     /// Send request using *async*
     /// - Returns: Generic type conforming to *Response* protocol
     func send<T: Response>() async throws -> T {
@@ -142,11 +143,29 @@ public extension Endpoint {
         return try T.parse(data: serverResponse.0)
     }
 
+
+    @available(*, deprecated, renamed: "asyncSend()", message: "This will be removed in later versions")
     /// Send request using *async* and only validate the response without decoding it to an object
     func send() async throws {
         let request = try buildURLRequest()
         let serverResponse = try await URLSession.shared.data(for: request)
         try responseValidation.validate(serverResponse)
+    }
+
+    /// Send request using *async* and only validate the response without decoding it to an object
+    func asyncSend() async throws {
+        let request = try buildURLRequest()
+        let serverResponse = try await URLSession.shared.data(for: request)
+        try responseValidation.validate(serverResponse)
+    }
+
+    /// Send request using *async*
+    /// - Returns: Generic type conforming to *Response* protocol
+    func asyncSend<T: Response>()  async throws -> T {
+        let request = try buildURLRequest()
+        let serverResponse = try await URLSession.shared.data(for: request)
+        try responseValidation.validate(serverResponse)
+        return try T.parse(data: serverResponse.0)
     }
 }
 
