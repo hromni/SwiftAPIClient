@@ -7,6 +7,8 @@
 
 Light weight and simplistic API Client written in Swift using protocol oriented programming. You can send requests using `async await` or `Combine` publishers without having to change anything.  **SwiftAPIClient** can help you implement your HTTP and server API calls with just a couple lines of code.
 
+Open Sourced by [HR Omni Solutions](https://www.hromni.com)
+
 | Table of contents |
 | --- |
 | [Install with SPM](#spm) |
