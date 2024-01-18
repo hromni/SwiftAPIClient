@@ -37,13 +37,13 @@ dependencies: [
 ### Cocoapods
 
 ```
-pod 'SwiftApiClient'
+pod 'HROmni.SwiftApiClient'
 ```
 
 or
 
 ```
-pod 'SwiftApiClient', :git => 'git@github.com:hromni/SwiftAPIClient.git'
+pod 'HROmni.SwiftApiClient', :git => 'git@github.com:hromni/SwiftAPIClient.git'
 ```
 
 <a name="enum-endpoints"/>
