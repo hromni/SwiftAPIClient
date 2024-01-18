@@ -34,6 +34,18 @@ dependencies: [
 ]
 ```
 
+### Cocoapods
+
+```
+pod 'SwiftApiClient'
+```
+
+or
+
+```
+pod 'SwiftApiClient', :git => 'git@github.com:hromni/SwiftAPIClient.git'
+```
+
 <a name="enum-endpoints"/>
 
 ### Define your endpoints using enum
