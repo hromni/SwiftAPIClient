@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name = 'HROmni.SwiftApiClient'
+  s.name = 'SwiftApiClient'
   s.swift_version = '4.0'
   s.ios.deployment_target = '13.0'
   s.osx.deployment_target = '10.15'
