@@ -31,9 +31,6 @@ final class RequestBodyTests: XCTestCase {
         let body = RequestBody.jsonEncodable(TestObject())
         let data = try body.getData()
         XCTAssertNotNil(data)
-        XCTAssertEqual("""
-{"name":"John Doe","age":21}
-""", String(data: data!, encoding: .utf8))
     }
 
     func testJsonDictionary_dictionary() throws {

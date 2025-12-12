@@ -36,7 +36,7 @@ public protocol ResponseValidator {
 }
 
 public struct BasicResponseValidator: ResponseValidator {
-    public func validate(_ response: (data: Data, response: URLResponse)) throws {
+    public func validate(_ response: (data: Data, response: URLResponse)) throws(SwiftApiClientError) {
         if let statusCode = (response.response as? HTTPURLResponse)?.statusCode,
            statusCode >= 300 {
             throw SwiftApiClientError.serverError(statusCode: statusCode, payload: response.data)

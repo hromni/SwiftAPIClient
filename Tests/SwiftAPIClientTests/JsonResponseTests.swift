@@ -43,7 +43,7 @@ final class JsonResponseTests: XCTestCase {
         do {
             _ = try TestJsonResponse.parse(data: "".data(using: .utf8)!)
             XCTFail("TestJsonResponse.parse(data: '') should throw decoding error")
-        } catch SwiftApiClientError.decodingError(_) {
+        } catch SwiftApiClientError.decodingError(_, _) {
             // do nothing for expected error
         } catch {
             XCTFail("TestJsonResponse.parse(data: nil) should throw SwiftApiClientError.decodingError found: \(error)")

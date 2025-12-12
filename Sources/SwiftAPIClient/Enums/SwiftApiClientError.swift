@@ -33,7 +33,7 @@ import Foundation
 
 public enum SwiftApiClientError: Error {
     case nilResponseData
-    case decodingError(DecodingError)
+    case decodingError(DecodingError, data: Data)
     case encodingError(EncodingError)
     case unexpectedError(Error)
     case serverError(statusCode: Int, payload: Data?)
