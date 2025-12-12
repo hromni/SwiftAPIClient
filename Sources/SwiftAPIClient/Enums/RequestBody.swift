@@ -36,7 +36,7 @@ public enum RequestBody {
     case jsonDictionary(Any)
     case formData([String: CustomStringConvertible?])
 
-    func getData() throws -> Data? {
+    func getData() throws(SwiftApiClientError) -> Data? {
         switch self {
         case .jsonEncodable(let obj):
             return try makeJson(obj)
@@ -47,7 +47,7 @@ public enum RequestBody {
         }
     }
 
-    private func makeJson(_ encodable: Encodable) throws -> Data? {
+    private func makeJson(_ encodable: Encodable) throws(SwiftApiClientError) -> Data? {
         do {
             return try JSONEncoder().encode(encodable)
         }catch let encodingError as EncodingError {
@@ -58,7 +58,7 @@ public enum RequestBody {
         }
     }
 
-    private func makeJson(_ json: Any) throws -> Data? {
+    private func makeJson(_ json: Any) throws(SwiftApiClientError) -> Data? {
         do {
             return try JSONSerialization.data(withJSONObject: json)
         }catch let encodingError as EncodingError {

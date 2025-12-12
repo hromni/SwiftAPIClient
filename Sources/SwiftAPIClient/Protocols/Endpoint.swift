@@ -56,7 +56,7 @@ public protocol Endpoint {
 
 // MARK: Private methods
 extension Endpoint {
-    func buildURLRequest() throws -> URLRequest {
+    func buildURLRequest() throws(SwiftApiClientError) -> URLRequest {
         guard var urlComponents = URLComponents(string: baseUrlString) else {
             throw SwiftApiClientError.invalidURL
         }
@@ -107,10 +107,8 @@ public extension Endpoint {
                 .tryMapResponse(T.self, responseValidator: responseValidation)
                 .mapErrorsToApiClientError()
                 .eraseToAnyPublisher()
-        } catch let error as SwiftApiClientError {
-            return Fail<T, SwiftApiClientError>(error: error).eraseToAnyPublisher()
         } catch {
-            return Fail<T, SwiftApiClientError>(error: SwiftApiClientError.unexpectedError(error)).eraseToAnyPublisher()
+            return Fail<T, SwiftApiClientError>(error: error).eraseToAnyPublisher()
         }
     }
 
@@ -123,35 +121,14 @@ public extension Endpoint {
                 .validateResponse(responseValidation)
                 .mapErrorsToApiClientError()
                 .eraseToAnyPublisher()
-        } catch let error as SwiftApiClientError {
-            return Fail<Void, SwiftApiClientError>(error: error).eraseToAnyPublisher()
         } catch {
-            return Fail<Void, SwiftApiClientError>(error: SwiftApiClientError.unexpectedError(error)).eraseToAnyPublisher()
+            return Fail<Void, SwiftApiClientError>(error: error).eraseToAnyPublisher()
         }
     }
 }
 
 @available(macOS 12, *)
 public extension Endpoint {
-    @available(*, deprecated, renamed: "asyncSend()", message: "This will be removed in later versions")
-    /// Send request using *async*
-    /// - Returns: Generic type conforming to *Response* protocol
-    func send<T: Response>() async throws -> T {
-        let request = try buildURLRequest()
-        let serverResponse = try await URLSession.shared.data(for: request)
-        try responseValidation.validate(serverResponse)
-        return try T.parse(data: serverResponse.0)
-    }
-
-
-    @available(*, deprecated, renamed: "asyncSend()", message: "This will be removed in later versions")
-    /// Send request using *async* and only validate the response without decoding it to an object
-    func send() async throws {
-        let request = try buildURLRequest()
-        let serverResponse = try await URLSession.shared.data(for: request)
-        try responseValidation.validate(serverResponse)
-    }
-
     /// Send request using *async* and only validate the response without decoding it to an object
     func asyncSend() async throws {
         let request = try buildURLRequest()

@@ -34,14 +34,14 @@ import Foundation
 public protocol JsonResponse: Response, Decodable {}
 
 public extension JsonResponse {
-    static func parse(data: Data?) throws -> Self {
+    static func parse(data: Data?) throws(SwiftApiClientError) -> Self {
         guard let data else {
             throw SwiftApiClientError.nilResponseData
         }
         do {
             return try JSONDecoder().decode(Self.self, from: data)
         } catch let decodingError as DecodingError {
-            throw SwiftApiClientError.decodingError(decodingError)
+            throw SwiftApiClientError.decodingError(decodingError, data: data)
         } catch {
             // this should never be called but is here as fallback
             throw SwiftApiClientError.unexpectedError(error)
