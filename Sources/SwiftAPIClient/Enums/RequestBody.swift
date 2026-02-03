@@ -31,10 +31,10 @@
 
 import Foundation
 
-public enum RequestBody {
-    case jsonEncodable(Encodable)
-    case jsonDictionary(Any)
-    case formData([String: CustomStringConvertible?])
+public enum RequestBody: Sendable {
+    case jsonEncodable(Encodable & Sendable)
+    case jsonDictionary([String: Any & Sendable])
+    case formData([String: String?])
 
     func getData() throws(SwiftApiClientError) -> Data? {
         switch self {
@@ -58,7 +58,7 @@ public enum RequestBody {
         }
     }
 
-    private func makeJson(_ json: Any) throws(SwiftApiClientError) -> Data? {
+    private func makeJson(_ json: [String: Any]) throws(SwiftApiClientError) -> Data? {
         do {
             return try JSONSerialization.data(withJSONObject: json)
         }catch let encodingError as EncodingError {

@@ -31,11 +31,14 @@
 
 import Foundation
 
-public protocol ResponseValidator {
+public protocol ResponseValidator: Sendable {
     func validate(_ response: (data: Data, response: URLResponse)) throws
 }
 
 public struct BasicResponseValidator: ResponseValidator {
+
+    public init() {}
+
     public func validate(_ response: (data: Data, response: URLResponse)) throws(SwiftApiClientError) {
         if let statusCode = (response.response as? HTTPURLResponse)?.statusCode,
            statusCode >= 300 {
