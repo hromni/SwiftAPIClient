@@ -39,7 +39,7 @@ public protocol Endpoint {
     /// Request method: GET, POST, PUT, DELETE. Default is GET
     var httpMethod: HTTPMethod { get }
     /// Request headeers. Default is EMPTY
-    var heаders: [String: String] { get }
+    var headers: [String: String] { get }
     /// Base URL string
     var baseUrlString: String { get }
     /// URL path. *Important* should always start with forward slash. Leave it empty if not relevant

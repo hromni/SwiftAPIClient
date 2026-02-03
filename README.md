@@ -30,20 +30,33 @@ Once you have your Swift package set up, adding SwiftAPIClient as a dependency i
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/hromni/SwiftAPIClient.git", .upToNextMajor(from: "0.1"))
+    .package(url: "https://github.com/hromni/SwiftAPIClient.git", .upToNextMajor(from: "1.0"))
 ]
 ```
 
-### Cocoapods
+### Concurency safe networking
 
-```
-pod 'HROmni.SwiftApiClient'
-```
+```swift
+import Foundation
+import SwiftAPIClient
 
-or
+// Define your response objects
+struct UserDTO: JsonResponse {
+    let id: Int
+    let name: String
+}
 
-```
-pod 'HROmni.SwiftApiClient', :git => 'git@github.com:hromni/SwiftAPIClient.git'
+// send API calls
+func getUser() async throws -> UserDTO {
+    let client = ApiClient()
+    return try await client.send(.init(
+        baseURL: "https://www.example.com",
+        path: "/api/users/1",
+        method: HTTPMethod = .get,
+        headers: [String : String] = ["Content-Type":"application/json"]
+    ))
+}
+
 ```
 
 <a name="enum-endpoints"/>

@@ -1,14 +1,13 @@
+//  Endpoint+APIRequest.swift
 //
-//  HTTPMethod.swift
-//  
 //
-//  Created by Panayot Panayotov on 06/03/2023.
+//  Created by Panayot Panayotov on 28/01/2026.
 //
 
 /**
  MIT License
 
- Copyright (c) 2023 HR Omni Solutions
+ Copyright (c) 2026 HR Omni Solutions
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -31,11 +30,25 @@
 
 import Foundation
 
-public enum HTTPMethod: String, Sendable {
-    case `get` = "GET"
-    case post = "POST"
-    case put = "PUT"
-    case delete = "DELETE"
-    case patch = "PATCH"
-    case head = "HEAD"
+public extension Endpoint {
+    /// Adapts a legacy `Endpoint` to a concurrency-safe `APIRequest`.
+    func asRequest<T: Response & Sendable>(_ responseType: T.Type) throws(SwiftApiClientError) -> APIRequest {
+        var q: [String: String?] = [:]
+        if let query = query {
+            for (k, v) in query {
+                q[k] = v?.description
+            }
+        }
+
+        return APIRequest(
+            baseURL: baseUrlString,
+            path: path,
+            method: httpMethod,
+            headers: headers,
+            query: q,
+            body: httpBody,
+            timeoutInterval: timeoutInterval,
+            cachePolicy: cachePolicy
+        )
+    }
 }

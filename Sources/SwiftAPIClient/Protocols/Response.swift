@@ -31,6 +31,6 @@
 
 import Foundation
 
-public protocol Response {
+public protocol Response: Sendable {
     static func parse(data: Data?) throws -> Self
 }
