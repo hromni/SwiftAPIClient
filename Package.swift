@@ -23,21 +23,11 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "SwiftAPIClient",
-            dependencies: [],
-            swiftSettings: [
-                .unsafeFlags(["-warn-concurrency"]),
-                .unsafeFlags(["-enable-actor-data-race-checks"], .when(configuration: .debug)),
-                .unsafeFlags(["-strict-concurrency=complete"])
-            ]
+            dependencies: []
         ),
         .testTarget(
             name: "SwiftAPIClientTests",
-            dependencies: ["SwiftAPIClient"],
-            swiftSettings: [
-                .unsafeFlags(["-warn-concurrency"]),
-                .unsafeFlags(["-enable-actor-data-race-checks"], .when(configuration: .debug)),
-                .unsafeFlags(["-strict-concurrency=complete"])
-            ]
+            dependencies: ["SwiftAPIClient"]
         ),
     ]
 )
